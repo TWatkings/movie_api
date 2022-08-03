@@ -5,12 +5,102 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie_Api</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h4>'To build the server-side component of a “movies” web application. The web
+    <h3>'To build the server-side component of a “movies” web application. The web
         application will provide users with access to information about different
         movies, directors, and genres. Users will be able to sign up, update their
         personal information, and create a list of their favorite movies.
-        '</h4>
+        '</h3>
+        <h1>URL Endpoints</h1>
+        <table>
+            <tr class="tableHead">
+              <td>Request</td>
+              <td>URL</td>
+              <td>HTTP
+                Method</td>
+              <td>Request body data
+                format
+                </td>
+              <td>Response body data
+                format</td>
+            </tr>
+            <tr>
+              <td>Return a list of ALL movies to the user</td>
+              <td>/movies</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>A JSON object holding data
+                about all the movies</td>
+            </tr>
+            <tr>
+              <td>Return data about a single movie by title to the user</td>
+              <td>/movies/[movie]</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>A JSON object holding data
+                about a single movie,
+                containing description, genre, director, image URL. 
+              </td>
+            </tr>
+            <tr>
+              <td>Return data about a genre</td>
+              <td>/movies/[genre]</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>A JSON object holding data
+                about the genre containing name and description</td>
+            </tr>
+            <tr>
+              <td>Return data about a director</td>
+              <td>/movies/[director]/[directorName]</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>A JSON object holding data
+                about the director containing name, birth, bio</td>
+            </tr>
+            <tr>
+                <td>Allow new users to register</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>A JSON object holding
+                    data about the users</td>
+                <td>A JSON object holding data
+                    about the user that was
+                    added, including an ID</td>
+              </tr>
+              <tr>
+                <td>Allow users to update their user info</td>
+                <td>/users[id]/[name]</td>
+                <td>PUT</td>
+                <td>A JSON object holding
+                    data about a single user</td>
+                <td>A JSON object holding updated data
+                    about the user like name</td>
+              </tr>
+              <tr>
+                <td>Allow users to add a movie to their list of favorites</td>
+                <td>users/[id]/[movie]</td>
+                <td>PUT</td>
+                <td>None</td>
+                <td> A text indicating that a movie has been added</td>
+              </tr>
+              <tr>
+                <td>Allow users to remove a movie from their list of favorites </td>
+                <td>users/[id]/[movie]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A text indicating that a movie has been remove</td>
+              </tr>
+              <tr>
+                <td>Allow existing users to deregister</td>
+                <td>users[id]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td> a text indicating a user has been removed</td>
+              </tr>
+
+        </table>
 </body>
 </html>
