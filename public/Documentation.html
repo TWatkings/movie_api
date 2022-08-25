@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +9,6 @@
     <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h3>'To build the server-side component of a “movies” web application. The web
-        application will provide users with access to information about different
-        movies, directors, and genres. Users will be able to sign up, update their
-        personal information, and create a list of their favorite movies.
-        '</h3>
         <h1>URL Endpoints</h1>
         <table>
             <tr class="tableHead">
@@ -25,6 +21,7 @@
                 </td>
               <td>Response body data
                 format</td>
+                <td>Example</td>
             </tr>
             <tr>
               <td>Return a list of ALL movies to the user</td>
@@ -33,6 +30,38 @@
               <td>None</td>
               <td>A JSON object holding data
                 about all the movies</td>
+                <td> {
+                  "Title": "A Clockwork Orange",
+                  "Description": "",
+                  "Genre": {
+                      "Name":"Crime",
+                       "Description":""
+                  },
+                  "Director": {
+                      "Name":"Stanley Kubrick",
+                      "Birth":"July 26, 1928",
+                      "Death":"March 7, 1999",
+                      "Bio": ""
+                  },
+                  "ImageUrl:"",
+                  "Year":"1971"
+          
+              },
+              {
+                  "Title": "Fargo",
+                  "Description": "",
+                  "Genre": {
+                      "Name":"Crime",
+                       "Description":""
+                  },
+                  "Director": {
+                      "Name":"Joel Coen",
+                      "Birth":"November 29, 1994",
+                      "Bio": ""
+                  },
+                  "ImageUrl":"",
+                  "Year":"1996"
+              },</td>
             </tr>
             <tr>
               <td>Return data about a single movie by title to the user</td>
@@ -43,6 +72,23 @@
                 about a single movie,
                 containing description, genre, director, image URL. 
               </td>
+              <td>{
+                "Title": "A Clockwork Orange",
+                "Description": "",
+                "Genre": {
+                    "Name":"Crime",
+                     "Description":""
+                },
+                "Director": {
+                    "Name":"Stanley Kubrick",
+                    "Birth":"July 26, 1928",
+                    "Death":"March 7, 1999",
+                    "Bio": ""
+                },
+                "ImageUrl:"",
+                "Year":"1971"
+        
+            }</td>
             </tr>
             <tr>
               <td>Return data about a genre</td>
@@ -51,6 +97,10 @@
               <td>None</td>
               <td>A JSON object holding data
                 about the genre containing name and description</td>
+                <td>"Genre": {
+                  "Name":"Crime",
+                   "Description":"Crime film is a genre that revolves around the action of a criminal mastermind."
+              },</td>
             </tr>
             <tr>
               <td>Return data about a director</td>
@@ -59,6 +109,11 @@
               <td>None</td>
               <td>A JSON object holding data
                 about the director containing name, birth, bio</td>
+                <td>"Director": {
+                  "Name":"Paul Thomas Anderson",
+                  "Birth":"June 26, 1970",
+                  "Bio": "Paul Thomas Anderson, is an American filmmaker. He developed an interest in filmmaking from a young age. He made his feature-film debut with Hard Eight (1996). He found critical and commercial success with Boogie Nights (1997) and received further accolades with Magnolia (1999) and Punch-Drunk Love (2002), a romantic comedy-drama film."
+                },</td>
             </tr>
             <tr>
                 <td>Allow new users to register</td>
@@ -69,6 +124,13 @@
                 <td>A JSON object holding data
                     about the user that was
                     added, including an ID</td>
+                    <td> { <br>
+                      "Name": "Tom",<br>
+                      "Email": "tommy@email.com," <br>
+                      "Password": "password12345," <br>
+                      "favorite movies": [],<br>
+                      "id": "6y957kLI9-2eec-69jk-86f0-857dd742cf3a"<br>
+                    } </td>
               </tr>
               <tr>
                 <td>Allow users to update their user info</td>
@@ -78,6 +140,13 @@
                     data about a single user</td>
                 <td>A JSON object holding updated data
                     about the user like name</td>
+                    <td> { <br>
+                      "Name": "Tom New",<br>
+                      "Email": "tommy@email.com", <br>
+                      "Password": "password12345", <br>
+                      "favoriteMovies": [],<br>
+                      "id": "6y957kLI9-2eec-69jk-86f0-857dd742cf3a"<br>
+                    }</td>
               </tr>
               <tr>
                 <td>Allow users to add a movie to their list of favorites</td>
@@ -85,6 +154,9 @@
                 <td>PUT</td>
                 <td>None</td>
                 <td> A text indicating that a movie has been added</td>
+                <td>{
+                  Fargo has been added to Tom New array
+                     }</td>
               </tr>
               <tr>
                 <td>Allow users to remove a movie from their list of favorites </td>
@@ -92,6 +164,9 @@
                 <td>DELETE</td>
                 <td>None</td>
                 <td>A text indicating that a movie has been remove</td>
+                <td>{
+                  Fargo has been removed from Tom New array
+                   }</td>
               </tr>
               <tr>
                 <td>Allow existing users to deregister</td>
@@ -99,8 +174,11 @@
                 <td>DELETE</td>
                 <td>None</td>
                 <td> a text indicating a user has been removed</td>
+                <td> {
+                  "Tom New has been deleted"
+                    }</td>
               </tr>
 
         </table>
 </body>
-</html>
+</html> 
