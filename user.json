@@ -1,0 +1,4 @@
+{"_id":{"$oid":"62fe53eaaf78795ba662f01b"},"Username":"Irving Cartwright","Password":"Icw852","Email":"IrvC@gmail.com","Birthday":"2007-09-14","FavoriteMovie":[]}
+{"_id":{"$oid":"62fe559aaf78795ba662f01c"},"Username":"Kaiser Colon","Password":"KC68KC","Email":"Colon753@gmail.com","Birthday":"1970-09-11","FavoriteMovie":[]}
+{"_id":{"$oid":"62fe579daf78795ba662f01d"},"Username":"Aliya Escobar","Password":"Esco845","Email":"Brick873@icloud.com","Birthday":"1998-05-24","FavoriteMovie":[],"FavoriteMovies":[{"$oid":"62fd5676d47d3e214ff2e678"}]}
+{"_id":{"$oid":"62fe59ddaf78795ba662f01e"},"Username":"Kayla Pitts","Password":"lapi846","Email":"layka@gmail.com","Birthday":"2002-04-14","FavoriteMovie":[]}
