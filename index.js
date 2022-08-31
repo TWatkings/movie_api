@@ -12,7 +12,9 @@ const uuid = require('uuid');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
-
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -23,6 +25,17 @@ app.use(bodyParser.json());
 
 app.get('movies/', (req, res) => {
     res.send('MY Fav Movies List')
+});
+//JTW authentication 
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 //Add a user
 /* We’ll expect JSON in this format
