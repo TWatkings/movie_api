@@ -12,6 +12,9 @@ const uuid = require('uuid');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
+const cors = require('cors');
+app.use(cors());
+const { check, validationResult } = require('express-validator');
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
@@ -38,25 +41,30 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
     });
 });
 //Add a user
-/* We’ll expect JSON in this format
-{
-  ID: Integer,
-  Username: String,
-  Password: String,
-  Email: String,
-  Birthday: Date
-}*/
-app.post('/users', (req, res) => {
-  Users.findOne({Username: req.body.Username })
+app.post('/users', 
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email dies not appear to be valid').isEmail()
+], (req, res) => {
+  // check the validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  let hashedPassword = Users.hashPassword(req.body.Password); //hashedPassword
+  Users.findOne({Username: req.body.Username }) // Search to see if a user with the requested username already exists
   .then((user) => {
     if(user) {
+       //If the user is found, send a response that it already exists
       return res.status(400).send(req.body.Username + 'already exists');
     } else {
       Users 
-
         .create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
@@ -95,17 +103,19 @@ app.get('/users/:Username', (req, res) => {
   });
 });
 // Update a user's info, by username
-/* We’ll expect JSON in this format
-{
-  Username: String,
-  (required)
-  Password: String,
-  (required)
-  Email: String,
-  (required)
-  Birthday: Date
-}*/
-app.put('/users/:Username', (req, res) => {
+app.put('/users/:Username', 
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email dies not appear to be valid').isEmail()
+], (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
@@ -153,59 +163,6 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 //     }
 // });
 
-// CREATE
-// app.post('/users/:id/:movieTitle', (req, res) => {
-//     const { id, movieTitle } = req.params;
-  
-//     let user = users.find( user => user.id == id ); 
-  
-//     if (user) {
-//       user.favoriteMovie.push(movieTitle);
-//       res.status(200).send(`${movieTitle} has been added to ${user.name}'s array`);
-//     } else {
-//       res.status(400).send('No such user found!');
-//     }
-//   });
-  //Update
-// app.put('/users/:id', (req, res) => {
-//   const { id } = req.params;
-//   const updatedUser = req.body;
-
-//   let user = users.find(user => user.id == id);
-
-//   if (user) {
-//       user.name = updatedUser.name;
-//       res.status(200).json(user);
-//   } else {
-//       res.status(400).send('no such user')
-//   }
-// });
-//DELETE
-// app.delete('/users/:id/:movieTitle', (req, res) => {
-//     const { id, movieTitle } = req.params;
-  
-//     let user = users.find( user => user.id == id );
-  
-//     if (user) {
-//       user.favoriteMovie = user.favoriteMovie.filter(title => title !== movieTitle);
-//       res.status(200).send(`${movieTitle} has been removed from ${user.name}'s array`);
-//     } else {
-//       res.status(400).send('No such user found!');
-//     }
-//   });
-//   //DELETE
-//   app.delete('/users/:id/', (req, res) => {
-//     const { id } = req.params;
-  
-//     let user = users.find( user => user.id == id );
-  
-//     if (user) {
-//       users = users.filter(user => user.id != id);
-//       res.status(200).send(`user ${user.name}' has been deleted`)
-//     } else {
-//       res.status(400).send('No such user');
-//     }
-//   });
   // Delete a user by username
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
@@ -278,9 +235,9 @@ app.use((err, req, res, next) => {
 
 
 
-
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on port ' + port);
   });
 
 
