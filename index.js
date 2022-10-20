@@ -182,14 +182,14 @@ app.delete('/users/:Username', (req, res) => {
 });
 //Read
 app.get('/movies', (req, res) => {
-    res.status(200).json(movies);
+    res.status(200).json(Movies);
 });
 
 //Read
 
 app.get('/movies/:title', (req, res) => {
     const {title} = req.params;
-    const movie = movies.find( movie => movie.Title === title );
+    const movie = movie.find( movie => movie.Title === title );
   
     if (movie) {
       res.status(200).json(movie);
@@ -202,7 +202,7 @@ app.get('/movies/:title', (req, res) => {
 
 app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const genre = movies.find( movie => movie.Genre.Name === genreName).Genre;
+    const genre = Movies.find( movie => movie.Genre.Name === genreName).Genre;
   
     if (genre) {
       res.status(200).json(genre);
@@ -215,7 +215,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
 
 app.get('/movies/director/:directorName', (req, res) => {
     const { directorName } = req.params;
-    const director = movies.find( movie => movie.Director.Name === directorName).Director;
+    const director = Movies.find( movie => movie.Director.Name === directorName).Director;
   
     if (director) {
       res.status(200).json(director);
