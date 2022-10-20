@@ -28,7 +28,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 
 
-app.get('movies/', (req, res) => {
+app.get('/movies', (req, res) => {
     res.send('MY Fav Movies List')
 });
 //JTW authentication 
