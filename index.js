@@ -6,7 +6,6 @@ const Users = Models.User;
 
 const express = require('express');
 const morgan = require('morgan');
-const { get, endsWith } = require('lodash');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const app = express();
