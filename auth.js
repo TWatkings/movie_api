@@ -1,6 +1,6 @@
 const jwtSecret = 'your_jwt_secret'; //same key use in JWTStrategy 
 
-const { Router } = require('express');
+// const { Router } = require('express');
 const jwt = require('jsonwebtoken'),
     passport = require('passport');
 
