@@ -7,7 +7,7 @@ const Users = Models.User;
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-// const uuid = require('uuid');  might not need 
+ const uuid = require('uuid');  
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
