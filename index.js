@@ -29,9 +29,9 @@ app.use(bodyParser.json());
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.js'));
 });
-// app.get('/movies', (req, res) => {
-//     res.send('MY Fav Movies List')
-// });
+app.get('/movies', (req, res) => {
+    res.send('MY Fav Movies List')
+});
 //JTW authentication 
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
