@@ -7,7 +7,7 @@ const Users = Models.User;
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const uuid = require('uuid');
+// const uuid = require('uuid');  might not need 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
@@ -47,7 +47,7 @@ app.post('/users',
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email dies not appear to be valid').isEmail()
+  check('Email', 'Email does not appear to be valid').isEmail()
 ], (req, res) => {
   // check the validation object for errors
   let errors = validationResult(req);
@@ -56,7 +56,7 @@ app.post('/users',
     return res.status(422).json({ errors: errors.array() });
   }
   let hashedPassword = Users.hashPassword(req.body.Password); //hashedPassword
-  Users.findOne({Username: req.body.Username }) // Search to see if a user with the requested username already exists
+  Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
   .then((user) => {
     if(user) {
        //If the user is found, send a response that it already exists
