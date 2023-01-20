@@ -5,26 +5,33 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
  const uuid = require('uuid');  
+
+
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true }));
+
 const cors = require('cors');
 app.use(cors());
+
+
 const { check, validationResult } = require('express-validator');
+
+
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); //use this when ready
 
 app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true }));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.js'));
@@ -33,16 +40,16 @@ app.get('/movies', (req, res) => {
     res.send('MY Fav Movies List')
 });
 //JTW authentication 
-// app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   Movies.find()
-//     .then((movies) => {
-//       res.status(201).json(movies);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       res.status(500).send('Error: ' + error);
-//     });
-// });
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
 //Add a user
 app.post('/users', 
 [
@@ -84,7 +91,7 @@ app.post('/users',
   });
 });
 // Get all users
-app.get('/users', (req, res) => {
+app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.find()
   .then((users) => {
     res.status(201).json(users);

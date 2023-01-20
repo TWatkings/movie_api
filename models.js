@@ -15,7 +15,6 @@ let movieSchema = mongoose.Schema({
         Name: String,
         Bio: String
     },
-    Actors: [String], //Arrays schema
     ImagePath: String // Data Type Schema
 });
 
@@ -24,7 +23,7 @@ let userSchema = mongoose.Schema({
     Password: {type: String, require: true},
     Email: {type: String, require: true},
     Birthday: Date, // Data Type Schema
-    FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId,ref: 'Movie'}] //Reference schema
+    FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}] //Reference schema
 });
 // Hash Password
 userSchema.statics.hashPassword = (Password) => {
