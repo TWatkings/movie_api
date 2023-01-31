@@ -17,9 +17,8 @@ const app = express();
 
 
 
- mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
- // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); 
+//  mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+ mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); 
 
 app.use(express.static('public'));
 app.use(morgan('common'));
@@ -50,16 +49,16 @@ app.get('/', (req, res) => {
     res.send('MY Fav Movies List')
 });
 //Get all movie
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((error) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
+// app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   Movies.find()
+//     .then((movies) => {
+//       res.status(201).json(movies);
+//     })
+//     .catch((error) => {
+//       console.error(err);
+//       res.status(500).send('Error: ' + err);
+//     });
+// });
 //Add a user
 app.post('/users', 
 [
