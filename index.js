@@ -46,10 +46,10 @@ const passport = require('passport');
 require('./passport');
 
 app.get('/', (req, res) => {
-    res.send('MY Fav Movies List')
+    res.send('Blamo')
 });
 // Get all movie
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
