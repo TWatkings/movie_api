@@ -17,8 +17,8 @@ const app = express();
 
 //mongoose.connect('mongodb+srv://Tom:<7931>@mycluster.qftel6o.mongodb.net/myCluster?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
- //mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
- mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); 
+ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+ //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); 
 
 app.use(express.static('public'));
 app.use(morgan('common'));
@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
     res.send('Blamo')
 });
 // Get all movie
-app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
